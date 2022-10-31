@@ -1,0 +1,7 @@
+@import "variables.css";
+@import "fonts.css";
+
+*, *::before, *::after {padding:0; margin:0; box-sizing:inherit;}
+
+html {font-family:var(--primary-font); font-size:62.5%;}
+body {box-sizing:border-box;}
