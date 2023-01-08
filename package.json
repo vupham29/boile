@@ -4,8 +4,13 @@
   "description": "An ExpressJS Boilerplate",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "backend:dev": "nodemon server.js",
+    "backend:build": "node server.js",
+    "frontend:dev": "webpack --config config/webpack.dev.js",
+    "frontend:watch": "webpack-dev-server --config config/webpack.dev.js",
+    "frontend:build": "webpack --config config/webpack.build.js",
+    "start": "concurrently --kill-others \"npm run frontend:watch\" \"npm run backend:dev\"",
+    "build": "npm run frontend:build"
   },
   "repository": {
     "type": "git",
@@ -32,6 +37,7 @@
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.2.2",
     "dotenv": "^16.0.3",
+    "image-minimizer-webpack-plugin": "^3.8.1",
     "mini-css-extract-plugin": "^2.6.1",
     "node-sass": "^7.0.3",
     "nodemon": "^2.0.20",
