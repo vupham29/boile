@@ -3,7 +3,6 @@ require('dotenv').config({path: '.env'});
 const express = require('express');
 const path = require("path");
 const bodyParser = require("body-parser");
-const multer = require("multer");
 
 // Routing
 const homeRoutes = require('./routes/home');
@@ -17,11 +16,6 @@ app.set('view engine', 'pug');
 // parse incoming data request
 app.use(bodyParser.urlencoded({extended: false}));
 
-// parse not plaintext data request,
-// default is single file, change it if you need
-// default parameter
-app.use(multer({dest: 'images'}).single('image'));
-
 // load static file
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -32,5 +26,5 @@ app.use(homeRoutes);
 app.use(errorRoutes);
 
 app.listen(process.env.PORT, () => {
-    console.log('request is coming');
+    console.log(`Example app listening at http://localhost:${process.env.PORT}`);
 });
