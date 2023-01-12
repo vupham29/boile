@@ -1,5 +1,5 @@
 exports.getHomePage = (req, res, next) => {
-    res.render('home', {
+    res.render('pages/home', {
         pageTitle: 'Home',
         path: 'home',
     });
