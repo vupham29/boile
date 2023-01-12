@@ -1,3 +1,19 @@
-body {
-  background: red;
-}
+@import './base/reset.scss';
+
+@import './utils/variables';
+@import './utils/variables';
+@import './utils/mixins';
+@import './utils/vendors';
+@import './utils/responsive';
+
+@import './base/font';
+@import './base/base';
+
+// components
+@import './components/preloader';
+
+// layout
+@import './layout/navigation';
+
+// pages
+@import './pages/home';
