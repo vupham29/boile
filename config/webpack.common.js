@@ -18,25 +18,21 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js', '.json'],
         alias: {
-            '@': path.resolve(__dirname, '../', 'app'),
+            '@': dirApp,
         },
     },
 
     module: {
         rules: [
+
             {
-                test: /\.(jpe?g|png|gif|svg)$/,
-                type: "asset/resource",
-                generator: {
-                    filename: "[hash].[ext]",
-                },
-            },
-            {
-                test: /\.(woff(2))$/,
-                type: 'asset/inline',
-                generator: {
-                    filename: "[hash].[ext]",
-                },
+                test: /\.(jpe?g|png|gif|svg|woff2?|fnt|webp)$/,
+                loader: 'file-loader',
+                options: {
+                    name(file){
+                        return '[hash].[ext]';
+                    }
+                }
             },
         ]
     },
