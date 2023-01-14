@@ -1,0 +1,9 @@
+.preloader {
+  background: $color-primary;
+  font-size: $size-h2;
+
+  &__text {
+    margin-bottom: $spacing-60;
+    line-height: 1.3;
+  }
+}
