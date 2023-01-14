@@ -30,13 +30,11 @@ module.exports = {
         rules: [
 
             {
-                test: /\.(jpe?g|png|gif|svg|woff2?|fnt|webp)$/,
-                loader: 'file-loader',
-                options: {
-                    name(file){
-                        return '[hash].[ext]';
-                    }
-                }
+                test: /\.(png|jpg|gif|jpe?g|svg|woff2?|fnt|webp|mp4)$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: '[hash].[ext]',
+                },
             },
         ]
     },
