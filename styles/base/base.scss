@@ -7,7 +7,6 @@
 
 html {
   font-size: 62.5%;
-  font-family: $font-primary;
 
   @include responsive('mobile') {
     font-size: 50%;
@@ -15,6 +14,96 @@ html {
 }
 
 body {
-  font-size: $size-body;
   color: $color-text;
+  background: $color-bg;
+  font-size: $size-body;
+  font-family: $font-primary;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+a, button {
+  color: $color-text;
+  transition: $transition;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: $color-heading;
+  margin-bottom: $spacing-30;
+  display: block;
+  font-family: $font-primary;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: $size-h1;
+}
+
+h2 {
+  font-size: $size-h2;
+}
+
+h3 {
+  font-size: $size-h3;
+}
+
+h4 {
+  font-size: $size-h4;
+}
+
+h5 {
+  font-size: $size-h5;
+}
+
+h6 {
+  font-size: $size-h6;
+}
+
+/* Default unordered list for text block */
+.ul,
+.ul {
+  list-style: none;
+  margin: 0;
+}
+
+ul ul {
+  padding-top: 15px;
+}
+
+ul:not(:last-child),
+ul:not(:last-child) {
+  margin-bottom: var(--vii-spacing-paragraph);
+}
+
+ul > li,
+ul > li {
+  padding: 0 0 0 20px;
+  position: relative;
+}
+
+ul > li:not(:last-child),
+ul > li:not(:last-child) {
+  margin-bottom: 11px;
+}
+
+ul > li:before,
+ul > li:before {
+  content: "";
+  position: absolute;
+  top: .5em;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50px;
+  background: var(--vii-color-black);
+  border: 1px solid var(--vii-color-black);
+}
+
+ul ul > li:before,
+ul ul > li:before {
+  background: #fff;
 }
