@@ -4,3 +4,17 @@
   box-sizing: border-box;
   user-select: none;
 }
+
+html {
+  font-size: 62.5%;
+  font-family: $font-primary;
+
+  @include responsive('mobile') {
+    font-size: 50%;
+  }
+}
+
+body {
+  font-size: $size-body;
+  color: $color-text;
+}
