@@ -1,35 +1,26 @@
 @font-face {
-  font-family: $font-george-x;
-  src: url('../fonts/GeorgeX-Regular.woff2') format('woff2'),
-  url('../fonts/GeorgeX-Regular.woff') format('woff');
-  font-weight: normal;
+  font-family: $font-primary;
+  src: url('../fonts/PlusJakartaSans-Medium.woff2') format('woff2'),
+  url('../fonts/PlusJakartaSans-Medium.woff') format('woff');
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: $font-suisse-bp;
-  src: url('../fonts/SuisseBPIntl-Regular.woff2') format('woff2'),
-  url('../fonts/SuisseBPIntl-Regular.woff') format('woff');
-  font-weight: normal;
+  font-family: $font-primary;
+  src: url('../fonts/PlusJakartaSans-SemiBold.woff2') format('woff2'),
+  url('../fonts/PlusJakartaSans-SemiBold.woff') format('woff');
+  font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: $font-suisse-bp;
-  src: url('../fonts/SuisseBPIntl-UltraLight.woff2') format('woff2'),
-  url('../fonts/SuisseBPIntl-UltraLight.woff') format('woff');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: $font-suisse-bp;
-  src: url('../fonts/SuisseBPIntl-Light.woff2') format('woff2'),
-  url('../fonts/SuisseBPIntl-Light.woff') format('woff');
-  font-weight: 300;
+  font-family: $font-primary;
+  src: url('../fonts/PlusJakartaSans-Bold.woff2') format('woff2'),
+  url('../fonts/PlusJakartaSans-Bold.woff') format('woff');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }

@@ -19,6 +19,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 // load static file
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+    app.locals.preloader = {
+        title: 'ExpressJS boiler plate \n Author: VuPham'
+    };
+    next();
+});
+
 // Home Page
 app.use(homeRoutes);
 
