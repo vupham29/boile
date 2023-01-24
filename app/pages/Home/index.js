@@ -1,4 +1,4 @@
-import Page from "classes/Page";
+import Page from '../../classes/Page';
 
 export default class Home extends Page{
     constructor(){
@@ -7,7 +7,7 @@ export default class Home extends Page{
 
             element: '.home',
             elements: {
-                navigation: '.navigation',
+                navigation: document.querySelector('.navigation'),
                 link: '.home__link'
             }
         });
@@ -15,5 +15,10 @@ export default class Home extends Page{
 
     create(){
         super.create();
+    }
+
+    destroy(){
+        super.destroy();
+        this.link.removeEventListeners();
     }
 }
