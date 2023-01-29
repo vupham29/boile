@@ -1,4 +1,5 @@
 import Home from './pages/Home/index';
+import NotFound from './pages/NotFound/index';
 import Preloader from './components/Preloader';
 
 class App{
@@ -8,9 +9,7 @@ class App{
         this.createPreloader();
         this.createPages();
 
-        this.addEventListeners();
-
-        this.addLinkListeners();
+        this.addEventListener();
     }
 
 
@@ -22,7 +21,8 @@ class App{
 
     createPages(){
         this.pages = {
-            home: new Home()
+            home: new Home(),
+            error: new NotFound()
         };
 
         // create a routing with AJAX and gives single page app behaviour
@@ -40,13 +40,10 @@ class App{
 
     onPreloaded(){
         this.preloader.destroy();
-
-        this.onResize();
-
         this.page.show();
     }
 
-    async onChange({url, push = true}){
+    async handlePageChange({url, push = true}){
         await this.page.hide();
         const request = await window.fetch(url);
 
@@ -55,51 +52,51 @@ class App{
             const div = document.createElement('div');
 
             div.innerHTML = html;
-
             const divContent = div.querySelector('.content');
-
             this.template = divContent.getAttribute('data-template');
 
             this.content.setAttribute('data-template', this.template);
             this.content.innerHTML = divContent.innerHTML;
 
+            if(push){
+                window.history.pushState({}, '', url);
+            }
+
             this.page = this.pages[this.template];
             this.page.create();
-
-            this.onResize();
-
             this.page.show();
 
-            this.addLinkListeners();
+            this.addLinksListener();
         }else{
             console.log("Error!");
         }
     }
 
-    onResize(){
-    }
-
     onPopState(){
-        this.onChange({url: window.location.pathname, push: false});
+        this.handlePageChange({url: window.location.pathname, push: false});
     }
 
 
     /*
     Listeners
     */
-    addEventListeners(){
-        window.addEventListener('resize', this.onResize.bind(this));
+    addEventListener(){
+        // Handle links click
+        this.addLinksListener();
+
+        // handlePopstate
+        window.addEventListener('popstate', this.onPopState.bind(this));
     }
 
-    addLinkListeners(){
+    addLinksListener(){
         const links = document.querySelectorAll('a');
         links.forEach(link => {
-            link.onclick = event => {
-                const {href} = link;
-                event.preventDefault();
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
 
-                this.onChange({url: href});
-            };
+                const {href} = link;
+                this.handlePageChange({url: href});
+            });
         });
     }
 }

@@ -1,4 +1,5 @@
 import Component from '../classes/Component';
+import GSAP from 'gsap';
 
 export default class Preloader extends Component{
     constructor(){
@@ -18,6 +19,12 @@ export default class Preloader extends Component{
     }
 
     createLoader(){
+        // not images
+        if(!this.elements.images.length){
+            setTimeout(this.onLoaded.bind(this), 500);
+            return;
+        }
+
         this.elements.images.forEach(element => {
             element.onload = () => this.onAssetLoaded(element);
             element.src = element.getAttribute('data-src');
@@ -38,7 +45,9 @@ export default class Preloader extends Component{
 
     onLoaded(){
         return new Promise(resolve => {
-
+            GSAP.to(this.element, {
+                autoAlpha: 0,
+            });
         });
     }
 
