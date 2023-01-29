@@ -21,6 +21,8 @@ export default class Preloader extends Component{
     createLoader(){
         // not images
         if(!this.elements.images.length){
+            this.elements.numberText.innerHTML = `100%`;
+
             setTimeout(this.onLoaded.bind(this), 500);
             return;
         }

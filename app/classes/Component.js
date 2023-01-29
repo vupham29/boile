@@ -6,8 +6,10 @@ export default class Component extends Utils{
         this.addEventListeners();
     }
 
+    /**
+     Listeners.
+     */
     addEventListeners(){
-
     }
 }
 

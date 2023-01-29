@@ -11,7 +11,6 @@ export default class Page extends Utils{
     /**
      * Animations.
      */
-
     show(){
         return new Promise(resolve => {
             this.animationIn = GSAP.timeline();
@@ -20,29 +19,23 @@ export default class Page extends Utils{
                 autoAlpha: 0
             }, {
                 autoAlpha: 1,
-            });
-
-            this.animationIn.call(() => {
-                resolve();
+                onComplete: resolve
             });
         });
     }
 
     hide(){
         return new Promise(resolve => {
-            this.animationOut = GSAP.timeline();
-
-            this.animationOut.to(this.element, {
+            GSAP.to(this.element, {
                 autoAlpha: 0,
                 onComplete: resolve
             });
         });
     }
 
-    /*
+    /**
       Listeners.
      */
-
     addEventListeners(){
     }
 
@@ -52,7 +45,6 @@ export default class Page extends Utils{
     /**
      * Destroy.
      */
-
     destroy(){
         this.removeEventListeners();
     }
