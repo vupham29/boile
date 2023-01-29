@@ -27,7 +27,7 @@ app.use((req, res, next) => {
     app.locals.isMobile = ua.device.type === 'mobile';
 
     app.locals.preloader = {
-        title: 'ExpressJS boiler plate \n Author: VuPham'
+        title: 'ExpressJS boilerplate \n Author: VuPham'
     };
     next();
 });

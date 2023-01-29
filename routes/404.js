@@ -1,10 +1,6 @@
+const errorController = require("../controllers/404");
 const router = require('express').Router();
 
-router.use((req, res, next) => {
-    res.render('pages/404', {
-        pageTitle: 'Not Found',
-        path: '404',
-    });
-});
+router.use(errorController.get404Page);
 
 module.exports = router;
