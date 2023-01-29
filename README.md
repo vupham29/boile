@@ -1,27 +1,17 @@
-# ExpressJS Boilerplate Project
+# Boilerplate to build a server with ExpressJS
 
 A boilerplate to build and bundle Javascript, PugJS code in server side.
 
-I have created this for all the next projects I will build soon.
-
-## About boilerplate
-
-With expressjs-boilerplate, we can: (but in progress)
-
-- [ ] Work with webpack to bundle and minimize code
-- [x] Work well with PugJS
-- [x] Installed necessary packages to build a nodeJS server.
-
 ## Deployment
 
-Run `./public` in live server
+Run `./public` in dev mode
 
 ```shell
-npm run dev
+npm start
 ```
 
-Build files from `./src` and `./public` to `./dist` for production
+Build files from `./src` and `./public` to `./dist` for production and run in production mode
 
 ```shell
-npm run build:prod
+npm run build
 ```
