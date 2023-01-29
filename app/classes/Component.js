@@ -22,7 +22,7 @@ export default class Component{
         }
         this.elements = {};
 
-        this.selectorChildren.forEach((entry, key) => {
+        for(const [key, entry] of Object.entries(this.selectorChildren)){
             if(entry instanceof window.HTMLElement || entry instanceof window.NodeList || Array.isArray(entry)){
                 this.elements[key] = entry;
             }else{
@@ -34,7 +34,7 @@ export default class Component{
                     this.elements[key] = this.element.querySelector(entry);
                 }
             }
-        });
+        }
     }
 
     addEventListeners(){
