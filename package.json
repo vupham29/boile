@@ -9,8 +9,8 @@
     "frontend:dev": "webpack --config config/webpack.dev.js",
     "frontend:watch": "webpack-dev-server --config config/webpack.dev.js",
     "frontend:build": "webpack --config config/webpack.build.js",
-    "start": "concurrently --kill-others \"npm run frontend:watch\" \"npm run backend\"",
-    "build": "concurrently --kill-others \"npm run frontend:build\" \"npm run backend\""
+    "start": "concurrently --kill-others \"npm run frontend:watch\" \"npm run backend:dev\"",
+    "build": "concurrently --kill-others \"npm run frontend:build\" \"npm run backend:build\""
   },
   "repository": {
     "type": "git",
