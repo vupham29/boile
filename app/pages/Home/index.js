@@ -7,13 +7,4 @@ export default class Home extends Page{
             element: '.home',
         });
     }
-
-    create(){
-        super.create();
-    }
-
-    destroy(){
-        super.destroy();
-        this.link.removeEventListeners();
-    }
 }

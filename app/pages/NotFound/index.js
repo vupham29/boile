@@ -7,8 +7,4 @@ export default class Home extends Page{
             element: '.error',
         });
     }
-
-    create(){
-        super.create();
-    }
 }
