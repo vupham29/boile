@@ -64,33 +64,28 @@ h6 {
 }
 
 /* Default unordered list for text block */
-.ul,
-.ul {
+ul {
   list-style: none;
   margin: 0;
 }
 
 ul ul {
-  padding-top: 15px;
+  padding-top: $spacing-15
 }
 
-ul:not(:last-child),
 ul:not(:last-child) {
-  margin-bottom: var(--vii-spacing-paragraph);
+  margin-bottom: $spacing-30;
 }
 
-ul > li,
 ul > li {
-  padding: 0 0 0 20px;
+  padding: 0 0 0 $spacing-20;
   position: relative;
 }
 
-ul > li:not(:last-child),
 ul > li:not(:last-child) {
-  margin-bottom: 11px;
+  margin-bottom: $spacing-10;
 }
 
-ul > li:before,
 ul > li:before {
   content: "";
   position: absolute;
@@ -99,11 +94,10 @@ ul > li:before {
   width: 4px;
   height: 4px;
   border-radius: 50px;
-  background: var(--vii-color-black);
-  border: 1px solid var(--vii-color-black);
+  background: #000;
+  border: 1px solid #000;
 }
 
-ul ul > li:before,
 ul ul > li:before {
   background: #fff;
 }
