@@ -50,7 +50,10 @@ class App{
 
     createPreloader(){
         if(document.body.hasAttribute('data-preloader')){
-            this.preloader = new Preloader();
+            this.preloader = new Preloader({
+                    onPreloaded: this.onPreloaded.bind(this),
+                }
+            );
         }
     }
 
