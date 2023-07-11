@@ -1,10 +1,10 @@
-import Page from '../../classes/Page';
+import Page from "@/classes/Page";
 
 export default class Home extends Page{
     constructor(){
         super({
-            id: 'home',
-            element: '.home',
+            id: 'error',
+            element: '.error',
         });
     }
 }

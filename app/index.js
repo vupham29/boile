@@ -1,5 +1,3 @@
-import Home from './pages/Home/index';
-import NotFound from './pages/NotFound/index';
 import Preloader from './components/Preloader';
 
 class App{
@@ -7,35 +5,57 @@ class App{
         this.createContent();
 
         this.createPreloader();
-        this.createPages();
+        this.createPage();
 
+        this.afterPageLoaded();
+    }
+
+    afterPageLoaded(){
         this.addEventListener();
     }
 
-
     // get content and template from different pages
     createContent(){
-        this.content = document.querySelector('.content');
+        this.content = document.querySelector('[data-template]');
         this.template = this.content.getAttribute('data-template'); // this.content.dataset.template is the equivalent but not supported for Safari
     }
 
-    createPages(){
-        this.pages = {
-            home: new Home(),
-            error: new NotFound()
-        };
+    createPage(){
+        this.pages = {};
 
-        // create a routing with AJAX and gives single page app behaviour
-        this.page = this.pages[this.template];
+        this.dynamicImportPage().then(() => {
+            this.page = this.pages[this.template];
+        });
+    }
+
+    dynamicImportPage(){
+        return new Promise((resolve) => {
+            // smart import
+            if(!this.pages[this.template]){
+                import(`@/pages/${this.template}`)
+                    .then((instance) => {
+                        this.pages[this.template] = new instance.default();
+                        resolve({
+                            hasExisted: false
+                        });
+                    });
+            }else{
+                resolve({
+                    hasExisted: true
+                });
+            }
+        });
     }
 
     createPreloader(){
-        this.preloader = new Preloader();
+        if(document.body.hasAttribute('data-preloader')){
+            this.preloader = new Preloader();
+        }
     }
 
-    /*
-    Events
-    */
+    /**
+     * Events
+     * */
 
     onPreloaded(){
         this.preloader.destroy();
@@ -43,29 +63,52 @@ class App{
     }
 
     async handlePageChange({url, push = true}){
+        // animation
         await this.page.hide();
+
+        // fetch new page
         const request = await window.fetch(url);
 
         if(request.status === 200){
+            // destroy old page
+            this.page.destroy();
+
+            // get html of new page
             const html = await request.text();
             const div = document.createElement('div');
 
             div.innerHTML = html;
-            const divContent = div.querySelector('.content');
+            const divContent = div.querySelector('[data-template]');
             this.template = divContent.getAttribute('data-template');
 
-            this.content.setAttribute('data-template', this.template);
-            this.content.innerHTML = divContent.innerHTML;
+            // change title html
+            document.querySelector('head > title').innerHTML = div.querySelector('title').innerHTML;
 
+            // change content HTML
+            this.content.outerHTML = divContent.outerHTML;
+            this.content = document.querySelector('[data-template]');
+
+            // push to popstate
             if(push){
                 window.history.pushState({}, '', url);
             }
 
-            this.page = this.pages[this.template];
-            this.page.create();
-            this.page.show();
+            this.dynamicImportPage().then((response) => {
+                if(!response.hasExisted){
+                    // not existed before
+                    // create the new one
+                    this.page = this.pages[this.template];
+                }else{
+                    // has existed
+                    this.page.create();
+                }
 
-            this.addLinksListener();
+                // animation
+                this.page.show();
+
+                // handle after page loaded
+                this.afterPageLoaded();
+            });
         }else{
             console.log("Error!");
         }
@@ -75,27 +118,33 @@ class App{
         this.handlePageChange({url: window.location.pathname, push: false});
     }
 
-
-    /*
-    Listeners
-    */
+    /**
+     * Listeners
+     * */
     addEventListener(){
         // Handle links click
         this.addLinksListener();
 
         // handlePopstate
-        window.addEventListener('popstate', this.onPopState.bind(this));
+        if(!this.handlePopstateChange){
+            this.handlePopstateChange = this.onPopState.bind(this);
+            window.addEventListener('popstate', this.handlePopstateChange);
+        }
     }
 
     addLinksListener(){
-        const links = document.querySelectorAll('a');
+        const links = document.querySelectorAll('a:not([href^="#"]):not(.dynamic-link-enabled)');
         links.forEach(link => {
             link.addEventListener('click', (e) => {
+                // external link
+                if(link.getAttribute('href') === link.href) return;
                 e.preventDefault();
 
                 const {href} = link;
                 this.handlePageChange({url: href});
             });
+
+            link.classList.add('dynamic-link-enabled');
         });
     }
 }

@@ -32,7 +32,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// Home Page
+// home Page
 app.use(homeRoutes);
 
 // Not found page

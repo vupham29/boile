@@ -1,35 +1,35 @@
-import Component from '../classes/Component';
-import GSAP from 'gsap';
+import Component from "@/classes/Component";
+import GSAP from "gsap";
 
 export default class Preloader extends Component{
     constructor(){
         super({
-            element: '.preloader',
+            element: ".preloader",
             elements: {
-                title: '.preloader__text',
-                number: '.preloader__number',
-                numberText: '.preloader__number__text',
-                images: document.querySelectorAll('img')
+                title: ".preloader__text",
+                images: document.querySelectorAll("img")
             }
         });
 
+        // element doesn't exist
+        if(!this.element) return;
+
         this.length = 0;
 
+        this.splitText();
         this.createLoader();
     }
 
     createLoader(){
         // not images
         if(!this.elements.images.length){
-            this.elements.numberText.innerHTML = `100%`;
-
             setTimeout(this.onLoaded.bind(this), 500);
             return;
         }
 
         this.elements.images.forEach(element => {
             element.onload = () => this.onAssetLoaded(element);
-            element.src = element.getAttribute('data-src');
+            element.src = element.getAttribute("data-src");
         });
     }
 
@@ -38,17 +38,27 @@ export default class Preloader extends Component{
 
         const percentage = this.length / this.elements.images.length;
 
-        this.elements.numberText.innerHTML = `${Math.round(percentage * 100)}%`;
-
         if(percentage === 1){
             this.onLoaded();
         }
     }
 
+    splitText(){
+        const textContent = this.elements.title.textContent;
+        this.elements.title.innerHTML = textContent.split(" ").map(t => `<span><span>${t}</span></span>`).join(" ");
+    }
+
     onLoaded(){
         return new Promise(resolve => {
-            GSAP.to(this.element, {
-                autoAlpha: 0,
+            const tl = GSAP.timeline({
+                defaults: {
+                    ease: "power1.in"
+                }
+            });
+            tl.to(this.elements.title.querySelectorAll("span span"), {
+                yPercent: 100
+            }).to(this.element, {
+                y: "100%"
             });
         });
     }
@@ -56,5 +66,4 @@ export default class Preloader extends Component{
     destroy(){
         this.element.parentNode.removeChild(this.element);
     }
-
 }

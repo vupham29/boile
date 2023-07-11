@@ -1,7 +1,7 @@
 {
-  "name": "boile",
+  "name": "expressjs-boilerplate",
   "version": "0.0.1",
-  "description": "Creating Express.js server with multiple pages on the fly",
+  "description": "An ExpressJS Boilerplate",
   "main": "server.js",
   "scripts": {
     "backend:dev": "nodemon server.js",
@@ -29,6 +29,7 @@
   "homepage": "https://github.com/vuquangpham/expressjs-boilerplate#readme",
   "devDependencies": {
     "@babel/core": "^7.19.6",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/preset-env": "^7.19.4",
     "@viivue/atomic-css": "^1.1.6",
     "babel-loader": "^8.2.5",
@@ -41,7 +42,7 @@
     "file-loader": "^6.2.0",
     "image-minimizer-webpack-plugin": "^3.8.1",
     "mini-css-extract-plugin": "^2.6.1",
-    "node-sass": "^7.0.3",
+    "node-sass": "^8.0.0",
     "nodemon": "^2.0.20",
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "^7.8.2",
