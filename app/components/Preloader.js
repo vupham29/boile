@@ -49,16 +49,16 @@ export default class Preloader extends Component{
     }
 
     onLoaded(){
-        return new Promise(resolve => {
+        return new Promise(() => {
             const tl = GSAP.timeline({
                 defaults: {
                     ease: "power1.in"
                 }
             });
             tl.to(this.elements.title.querySelectorAll("span span"), {
-                yPercent: 100
+                yPercent: 105
             }).to(this.element, {
-                y: "100%"
+                yPercent: 100
             });
         });
     }

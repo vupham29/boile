@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 
     // preloader
     app.locals.preloader = {
-        title: 'ExpressJS boilerplate \n Author: Vu Pham'
+        title: 'Boile Template'
     };
 
     next();
