@@ -1,4 +1,5 @@
 import Preloader from './components/Preloader';
+import '@/vendors/theme/theme.min.js';
 
 class App{
     constructor(){
