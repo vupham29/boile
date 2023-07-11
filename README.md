@@ -1,6 +1,13 @@
-# Boilerplate to build a server with ExpressJS
+# Boile Template
 
-A boilerplate to build and bundle Javascript, PugJS code in server side.
+> Creating Express.js server on the fly 💨
+
+## Features
+
+- Build with EJS view engine (similar to HTML)
+- Smooth transition when navigating between each page
+- Dynamic import
+- Bundle code
 
 ## Deployment
 
