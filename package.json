@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vuquangpham/expressjs-boilerplate.git"
+    "url": "git+https://github.com/vuquangpham/boile.git"
   },
   "keywords": [
     "expressjs",
@@ -24,9 +24,9 @@
   "author": "Vu Pham",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vuquangpham/expressjs-boilerplate/issues"
+    "url": "https://github.com/vuquangpham/boile/issues"
   },
-  "homepage": "https://github.com/vuquangpham/expressjs-boilerplate#readme",
+  "homepage": "https://github.com/vuquangpham/boile#readme",
   "devDependencies": {
     "@babel/core": "^7.19.6",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
