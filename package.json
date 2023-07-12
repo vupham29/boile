@@ -1,7 +1,7 @@
 {
-  "name": "expressjs-boilerplate",
+  "name": "boile",
   "version": "0.0.1",
-  "description": "An ExpressJS Boilerplate",
+  "description": "Creating Express.js server on the fly",
   "main": "server.js",
   "scripts": {
     "backend:dev": "nodemon server.js",
