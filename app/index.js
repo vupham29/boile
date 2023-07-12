@@ -1,13 +1,11 @@
-import Preloader from './components/Preloader';
-import '@/vendors/theme/theme.min.js';
+import Preloader from '@/components/Preloader';
+import '@/components/theme.min';
 
 class App{
     constructor(){
         this.createContent();
-
         this.createPreloader();
         this.createPage();
-
         this.afterPageLoaded();
     }
 
@@ -25,26 +23,21 @@ class App{
         this.pages = {};
 
         this.dynamicImportPage().then(() => {
-            this.page = this.pages[this.template];
+            this.page = new this.pages[this.template].default();
         });
     }
 
     dynamicImportPage(){
         return new Promise((resolve) => {
-            // smart import
-            if(!this.pages[this.template]){
-                import(`@/pages/${this.template}`)
-                    .then((instance) => {
-                        this.pages[this.template] = new instance.default();
-                        resolve({
-                            hasExisted: false
-                        });
-                    });
-            }else{
-                resolve({
-                    hasExisted: true
+            // already exist
+            if(this.pages[this.template]) return resolve();
+
+            // dynamic import
+            import(`@/pages/${this.template}`)
+                .then((instance) => {
+                    this.pages[this.template] = instance;
+                    resolve();
                 });
-            }
         });
     }
 
@@ -60,10 +53,8 @@ class App{
     /**
      * Events
      * */
-
     onPreloaded(){
         this.preloader.destroy();
-        this.page.show();
     }
 
     async handlePageChange({url, push = true}){
@@ -97,15 +88,8 @@ class App{
                 window.history.pushState({}, '', url);
             }
 
-            this.dynamicImportPage().then((response) => {
-                if(!response.hasExisted){
-                    // not existed before
-                    // create the new one
-                    this.page = this.pages[this.template];
-                }else{
-                    // has existed
-                    this.page.create();
-                }
+            this.dynamicImportPage().then(() => {
+                this.page = new this.pages[this.template].default();
 
                 // animation
                 this.page.show();
@@ -140,9 +124,17 @@ class App{
         const links = document.querySelectorAll('a:not([href^="#"]):not(.dynamic-link-enabled)');
         links.forEach(link => {
             link.addEventListener('click', (e) => {
+                const currentURL = new URL(location.href);
+                const linkURL = new URL(link.href);
+
                 // external link
-                if(link.getAttribute('href') === link.href) return;
+                if(currentURL.host !== linkURL.host) return;
+
+                // internal link
                 e.preventDefault();
+
+                // current page => no need to do anything
+                if(currentURL.href === linkURL.href) return;
 
                 const {href} = link;
                 this.handlePageChange({url: href});
