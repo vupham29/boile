@@ -1,7 +1,7 @@
 @import './base/reset.scss';
 
 // library
-@import '@viivue/atomic-css';
+@import 'atomic/atomic';
 
 @import './utils/variables.css';
 @import './utils/mixins';
@@ -13,7 +13,6 @@
 
 // components
 @import './components/preloader';
-@import './components/aside';
 
 // pages
 @import './pages/home';
