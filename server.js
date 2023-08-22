@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 
     // preloader
     app.locals.preloader = {
-        title: 'Boile Template'
+        title: 'Test Template'
     };
 
     next();
