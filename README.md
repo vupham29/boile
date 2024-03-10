@@ -1,13 +1,12 @@
-# Boile Template
+# Welcome to the Boile Boilerplate
 
-> Creating Express.js server on the fly 💨
+> Create fullstack application with Node.js for the Backend and Vanilla Javascript, CSS for the Frontend
 
-## Features
+## What we do?
 
-- Build with EJS view engine (similar to HTML)
-- Smooth transition when navigating between each page
-- Dynamic import
-- Bundle code
+To create a fullstack application with the built-in files structuring
+
+## Examples
 
 ## Deployment
 
