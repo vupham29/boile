@@ -1,148 +1,143 @@
-import Preloader from '@/components/Preloader';
-import '@/vendors/theme/theme.min';
+import "@/vendors/theme/theme.min";
 
-class App{
-    constructor(){
-        this.createContent();
-        this.createPreloader();
-        this.createPage();
-        this.afterPageLoaded();
-    }
+class App {
+  constructor() {
+    this.createContent();
+    this.createPage();
+    this.afterPageLoaded();
+  }
 
-    afterPageLoaded(){
-        this.addEventListener();
-    }
+  afterPageLoaded() {
+    this.addEventListener();
+  }
 
-    // get content and template from different pages
-    createContent(){
-        this.content = document.querySelector('[data-template]');
-        this.template = this.content.getAttribute('data-template'); // this.content.dataset.template is the equivalent but not supported for Safari
-    }
+  createContent() {
+    // create ...
+    this.content = document.querySelector("[data-template]");
 
-    createPage(){
-        this.pages = {};
+    // get template name
+    this.template = this.content.getAttribute("data-template");
+  }
 
-        this.dynamicImportPage().then(() => {
-            this.page = new this.pages[this.template].default();
-        });
-    }
+  createPage() {
+    this.pages = {};
 
-    dynamicImportPage(){
-        return new Promise((resolve) => {
-            // already exist
-            if(this.pages[this.template]) return resolve();
+    this.dynamicImportPage().then(() => {
+      const Page = this.pages[this.template].default;
+      this.page = new Page();
+    });
+  }
 
-            // dynamic import
-            import(`@/pages/${this.template}`)
-                .then((instance) => {
-                    this.pages[this.template] = instance;
-                    resolve();
-                });
-        });
-    }
+  dynamicImportPage() {
+    return new Promise((resolve) => {
+      // already exist
+      if (this.pages[this.template]) {
+        return resolve();
+      }
 
-    createPreloader(){
-        if(document.body.hasAttribute('data-preloader')){
-            this.preloader = new Preloader({
-                    onPreloaded: this.onPreloaded.bind(this),
-                }
-            );
-        }
-    }
+      // dynamic import
+      import(`@/pages/${this.template}`).then((instance) => {
+        this.pages[this.template] = instance;
+        resolve();
+      });
+    });
+  }
 
-    /**
-     * Events
-     * */
-    onPreloaded(){
-        this.preloader.destroy();
-    }
+  async handlePageChange({ url, push = true }) {
+    // animation
+    await this.page.hide();
 
-    async handlePageChange({url, push = true}){
+    // fetch new page
+    const request = await window.fetch(url);
+
+    if (request.status === 200) {
+      // destroy old page
+      this.page.destroy();
+
+      // get html of new page
+      const html = await request.text();
+      const div = document.createElement("div");
+
+      div.innerHTML = html;
+      const divContent = div.querySelector("[data-template]");
+      this.template = divContent.getAttribute("data-template");
+
+      // change title html
+      document.querySelector("head > title").innerHTML =
+        div.querySelector("title").innerHTML;
+
+      // change content HTML
+      this.content.outerHTML = divContent.outerHTML;
+      this.content = document.querySelector("[data-template]");
+
+      // push to popstate
+      if (push) {
+        window.history.pushState({}, "", url);
+      }
+
+      this.dynamicImportPage().then(() => {
+        const Page = this.pages[this.template].default;
+        this.page = new Page();
+
         // animation
-        await this.page.hide();
+        this.page.show();
 
-        // fetch new page
-        const request = await window.fetch(url);
+        // handle after page loaded
+        this.afterPageLoaded();
+      });
+    } else {
+      console.log("Error!");
+    }
+  }
 
-        if(request.status === 200){
-            // destroy old page
-            this.page.destroy();
+  onPopState() {
+    this.handlePageChange({ url: window.location.pathname, push: false });
+  }
 
-            // get html of new page
-            const html = await request.text();
-            const div = document.createElement('div');
+  /**
+   * Listeners
+   * */
+  addEventListener() {
+    // Handle links click
+    this.addLinksListener();
 
-            div.innerHTML = html;
-            const divContent = div.querySelector('[data-template]');
-            this.template = divContent.getAttribute('data-template');
+    // handlePopstate
+    if (!this.handlePopstateChange) {
+      this.handlePopstateChange = this.onPopState.bind(this);
+      window.addEventListener("popstate", this.handlePopstateChange);
+    }
+  }
 
-            // change title html
-            document.querySelector('head > title').innerHTML = div.querySelector('title').innerHTML;
+  addLinksListener() {
+    const links = document.querySelectorAll(
+      "a:not([href^=\"#\"]):not(.dynamic-link-enabled)",
+    );
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const currentURL = new URL(location.href);
+        const linkURL = new URL(link.href);
 
-            // change content HTML
-            this.content.outerHTML = divContent.outerHTML;
-            this.content = document.querySelector('[data-template]');
-
-            // push to popstate
-            if(push){
-                window.history.pushState({}, '', url);
-            }
-
-            this.dynamicImportPage().then(() => {
-                this.page = new this.pages[this.template].default();
-
-                // animation
-                this.page.show();
-
-                // handle after page loaded
-                this.afterPageLoaded();
-            });
-        }else{
-            console.log("Error!");
+        // external link
+        if (currentURL.host !== linkURL.host) {
+          return;
         }
-    }
 
-    onPopState(){
-        this.handlePageChange({url: window.location.pathname, push: false});
-    }
+        // internal link
+        e.preventDefault();
 
-    /**
-     * Listeners
-     * */
-    addEventListener(){
-        // Handle links click
-        this.addLinksListener();
-
-        // handlePopstate
-        if(!this.handlePopstateChange){
-            this.handlePopstateChange = this.onPopState.bind(this);
-            window.addEventListener('popstate', this.handlePopstateChange);
+        // current page => no need to do anything
+        if (currentURL.href === linkURL.href) {
+          return;
         }
-    }
 
-    addLinksListener(){
-        const links = document.querySelectorAll('a:not([href^="#"]):not(.dynamic-link-enabled)');
-        links.forEach(link => {
-            link.addEventListener('click', (e) => {
-                const currentURL = new URL(location.href);
-                const linkURL = new URL(link.href);
+        const { href } = link;
+        this.handlePageChange({ url: href });
+      });
 
-                // external link
-                if(currentURL.host !== linkURL.host) return;
-
-                // internal link
-                e.preventDefault();
-
-                // current page => no need to do anything
-                if(currentURL.href === linkURL.href) return;
-
-                const {href} = link;
-                this.handlePageChange({url: href});
-            });
-
-            link.classList.add('dynamic-link-enabled');
-        });
-    }
+      // current link => not load again
+      link.classList.add("dynamic-link-enabled");
+    });
+  }
 }
 
 new App();

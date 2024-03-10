@@ -1,6 +1,12 @@
-const errorController = require("../controllers/404");
-const router = require('express').Router();
+/* eslint-disable no-unused-vars */
+const errorHandler = (request, response, next) => {
+  console.log("hi");
+  response.render("pages/404", {
+    title: "OOPS! \n" + "404 PAGE NOT FOUND",
+    message:
+      "The page you’re looking for does not exist or has been removed.\n" +
+      'You can proceed to our <a href="/">home page</a>.',
+  });
+};
 
-router.use(errorController.get404Page);
-
-module.exports = router;
+module.exports = errorHandler;

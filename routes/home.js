@@ -1,6 +1,9 @@
-const router = require('express').Router();
-const homeController = require('../controllers/home');
+const router = require("express").Router(); // eslint-disable-line
 
-router.get('/', homeController.getHomePage);
+router.get("/", (_, response) => {
+  response.render("pages/home", {
+    title: "Home",
+  });
+});
 
 module.exports = router;
