@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const errorHandler = (request, response, next) => {
+const errorHandler = (error, _, response, next) => {
   response.render("pages/404", {
     title: "OOPS! \n" + "404 PAGE NOT FOUND",
     message:

@@ -7,6 +7,7 @@ const { address } = require("ip");
 
 // routing
 const homeRoute = require("./routes/home");
+const notFoundRoute = require("./routes/notFound");
 const errorRoute = require("./routes/404");
 
 const app = express();
@@ -28,7 +29,10 @@ app.use((req, res, next) => {
 });
 
 // home
-app.use(homeRoute);
+app.use("/", homeRoute);
+
+// not found page
+app.use("*", notFoundRoute);
 
 // handle 404
 app.use(errorRoute);
