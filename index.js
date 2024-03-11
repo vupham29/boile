@@ -29,10 +29,10 @@ app.use((req, res, next) => {
 });
 
 // home
-app.use("/", homeRoute);
+app.use(homeRoute);
 
 // not found page
-app.use("*", notFoundRoute);
+app.use(notFoundRoute);
 
 // handle 404
 app.use(errorRoute);
