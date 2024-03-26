@@ -49,3 +49,10 @@ body {
   margin-left: calc(-1 * var(--gap-side));
   margin-right: calc(-1 * var(--gap-side));
 }
+
+// remove br
+@include responsive("tablet-v") {
+  br {
+    display: none;
+  }
+}
