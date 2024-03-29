@@ -2,14 +2,20 @@ import "@/vendors/theme/theme.min";
 
 class App {
   constructor() {
+    // create content
     this.createContent();
+
+    this.createPreloader();
+
     this.createPage();
     this.afterPageLoaded();
-  }
 
-  afterPageLoaded() {
     this.addEventListener();
   }
+
+  createPreloader() {}
+
+  onPreloaded() {}
 
   createContent() {
     // create ...
@@ -26,6 +32,11 @@ class App {
       const Page = this.pages[this.template].default;
       this.page = new Page();
     });
+  }
+
+  afterPageLoaded() {
+    // Handle links click
+    this.addLinksListener();
   }
 
   dynamicImportPage() {
@@ -98,19 +109,27 @@ class App {
    * Listeners
    * */
   addEventListener() {
-    // Handle links click
-    this.addLinksListener();
+    // resize
+    window.addEventListener(
+      "resize",
+      window.Theme.debounce(this.resize.bind(this)),
+    );
 
-    // handlePopstate
-    if (!this.handlePopstateChange) {
-      this.handlePopstateChange = this.onPopState.bind(this);
-      window.addEventListener("popstate", this.handlePopstateChange);
-    }
+    // history api
+    window.addEventListener("popstate", this.onPopState.bind(this));
+  }
+
+  resize() {
+    // resize for the page
+    this.page.resize();
+
+    // resize for the canvas
+    this.canvas.resize();
   }
 
   addLinksListener() {
     const links = document.querySelectorAll(
-      "a:not([href^=\"#\"]):not(.dynamic-link-enabled)",
+      'a:not([href^="#"]):not(.dynamic-link-enabled)',
     );
     links.forEach((link) => {
       link.addEventListener("click", (e) => {
