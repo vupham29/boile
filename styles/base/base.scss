@@ -1,22 +1,39 @@
-*,
-*:after,
-*:before {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+html {
+  --breakpoint: 1920;
+  --multiplier: 10;
+  // at 1920 breakpoint, we will have 10px (looks like 62.5%)
+  font-size: calc(var(--100vw) / var(--breakpoint) * var(--multiplier));
+
+  // responsive for tablet-h
+  @include responsive("touches-device") {
+    --breakpoint: 1180;
+  }
+
+  // responsive font size
+  @include responsive("tablet-v") {
+    --breakpoint: 768;
+  }
+
+  // responsive font size
+  @include responsive("mobile") {
+    --breakpoint: 480;
+  }
 }
 
 body {
   min-height: 100vh;
-  background: var(--color-bg);
   position: relative;
 
   color: var(--color-text);
   font-size: var(--size-body);
   font-family: var(--font-primary);
   line-height: 1.4;
-  font-weight: 400;
-  letter-spacing: 0.01em;
+  font-weight: 300;
+  letter-spacing: 0;
+
+  [data-scrollable] {
+    padding-top: var(--header-height);
+  }
 }
 
 .container {
@@ -31,6 +48,8 @@ body {
 .txt_color_white {
   --color-text: #fff;
   --color-heading: #fff;
+  --permalink-color: #fff;
+  --permalink-color-hover: var(--color-primary);
   color: #fff;
 }
 
@@ -39,15 +58,25 @@ body {
   border-color: white;
 }
 
-.txt_color_white a:hover,
-.txt_color_white a:focus {
-  color: var(--color-primary);
-}
-
 /* Make the section full width */
 .container .container-full-width {
   margin-left: calc(-1 * var(--gap-side));
   margin-right: calc(-1 * var(--gap-side));
+}
+
+// template
+[data-template] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+// data-src
+[data-src] {
+  transition: opacity 0.7s ease-in-out;
+
+  &:not(.loaded) {
+    opacity: 0;
+  }
 }
 
 // remove br

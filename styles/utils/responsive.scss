@@ -1,9 +1,9 @@
 $breakpoints: (
-  "mobile-s": 425px,
-  "mobile": 480px,
-  "tablet-v": 768px,
-  "tablet-h": 1024px,
-  "touches-device": 1180px,
+  "mobile-small": theme("screens[mobile-small].max"),
+  "mobile": theme("screens.mobile.max"),
+  "tablet-v": theme("screens[tablet-v].max"),
+  "tablet-h": theme("screens[tablet-h].max"),
+  "touches-device": theme("screens[touches-device].max"),
 ) !default;
 
 /* Visibility Classes */

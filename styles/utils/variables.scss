@@ -1,46 +1,59 @@
 :root {
-  /* Colors */
+  // text and bg
   --color-bg: #fff;
   --color-text: #000;
   --color-heading: var(--color-text);
 
-  --color-permalink: var(--color-text);
-  --color-permalink-highlight: #fff;
+  // permalink
+  --permalink-color: var(--color-text);
+  --permalink-color-hover: var(--color-primary);
 
-  --color-primary: #3292ff;
-
-  --color-error: #dd4b29;
-  --color-gray: #ccc;
+  // color vars
+  --color-primary: theme("colors.primary");
   --color-white: #fff;
-  --color-placeholder: #1d1b1b80;
+  --color-gray: rgba(210, 210, 210, 0.2);
 
-  /* font sizes (use exact number to identify) */
-  --size-30: 30px;
-  --size-28: 28px;
-  --size-24: 24px;
-  --size-20: 20px;
-  --size-17: 17px;
-  --size-16: 16px;
-  --size-14: 14px;
+  --color-error: #f03e3e;
+  --color-success: #37b24d;
+  --color-warning: #fcc419;
+
+  --placeholder-color: #adb5bd;
+
+  /* font sizes */
+  --size-28: 2.8rem;
+  --size-24: 2.4rem;
+  --size-20: 2rem;
+  --size-16: 1.6rem;
+  --size-14: 1.4rem;
 
   /* Relative font sizes */
   --size-body: var(--size-16);
   --size-h1: var(--size-28);
   --size-h2: var(--size-24);
   --size-h3: var(--size-20);
-  --size-h4: var(--size-17);
+  --size-h4: var(--size-16);
   --size-h5: var(--size-16);
   --size-h6: var(--size-16);
 
   /* Fonts */
-  --font-primary: "Gabarito";
+  --font-primary: theme("fontFamily.primary");
+  --font-secondary: theme("fontFamily.secondary");
 
   /* Container */
   --100vw: 100vw;
-  --container: 1180px;
-  --gap-container: 40px;
+  --container: 130rem;
+  --gap-container: 4rem;
   --gap-side: max(
     var(--gap-container),
     calc((var(--100vw) - var(--container)) * 0.5)
   );
+
+  /* header height */
+  --header-height: 12rem;
+}
+
+@include responsive("touches-device") {
+  :root {
+    --header-height: 8rem;
+  }
 }
