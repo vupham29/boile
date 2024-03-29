@@ -101,32 +101,6 @@ class App {
     }
   }
 
-  onPopState() {
-    this.handlePageChange({ url: window.location.pathname, push: false });
-  }
-
-  /**
-   * Listeners
-   * */
-  addEventListener() {
-    // resize
-    window.addEventListener(
-      "resize",
-      window.Theme.debounce(this.resize.bind(this)),
-    );
-
-    // history api
-    window.addEventListener("popstate", this.onPopState.bind(this));
-  }
-
-  resize() {
-    // resize for the page
-    this.page.resize();
-
-    // resize for the canvas
-    this.canvas.resize();
-  }
-
   addLinksListener() {
     const links = document.querySelectorAll(
       'a:not([href^="#"]):not(.dynamic-link-enabled)',
@@ -156,6 +130,32 @@ class App {
       // current link => not load again
       link.classList.add("dynamic-link-enabled");
     });
+  }
+
+  /**
+   * Listeners
+   * */
+  addEventListener() {
+    // resize
+    window.addEventListener(
+      "resize",
+      window.Theme.debounce(this.onResize.bind(this)),
+    );
+
+    // history api
+    window.addEventListener("popstate", this.onPopState.bind(this));
+  }
+
+  onResize() {
+    // resize for the page
+    this.page.resize();
+
+    // resize for the canvas
+    this.canvas.resize();
+  }
+
+  onPopState() {
+    this.handlePageChange({ url: window.location.pathname, push: false });
   }
 }
 
