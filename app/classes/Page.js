@@ -12,18 +12,30 @@ export default class Page extends Utils {
   /**
    * Animations.
    */
-  show() {
+  show(animation) {
     return new Promise((resolve) => {
-      GSAP.fromTo(
-        this.element,
-        {
-          autoAlpha: 0,
-        },
-        {
-          autoAlpha: 1,
-          onComplete: resolve,
-        },
-      );
+      // custom animation
+      if (animation) {
+        this.animation = animation;
+      } else {
+        this.animation = GSAP.timeline();
+        this.animation.fromTo(
+          this.element,
+          {
+            autoAlpha: 0,
+          },
+          {
+            autoAlpha: 1,
+          },
+        );
+      }
+
+      // call at the end of timeline
+      this.animation.call(() => {
+        this.addEventListeners();
+
+        resolve();
+      });
     });
   }
 
@@ -37,9 +49,21 @@ export default class Page extends Utils {
   }
 
   /**
+   * Resize
+   */
+  resize() {}
+
+  /**
+   * Event listeners
+   */
+  addEventListeners() {}
+  removeEventListeners() {}
+
+  /**
    * Destroy when navigating between each page.
    */
   destroy() {
-    console.log("destroy page:", this);
+    // remove event listeners
+    this.removeEventListeners();
   }
 }
