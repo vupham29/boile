@@ -15,7 +15,7 @@ const app = express();
 
 // set views engine
 app.set("view engine", "ejs");
-app.set("views", "views");
+app.set("views", path.join(__dirname, "views"));
 
 // logger
 app.use(logger("dev"));
